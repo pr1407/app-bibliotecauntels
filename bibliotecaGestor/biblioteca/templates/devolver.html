@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devolver Libro</title>
+</head>
+<body>
+    <nav> {% include 'navbar.html' %} </nav>
+    <h1>Listado de Prestamos</h1>
+    <table class="table" style = 'text-align: center'>
+        <thead>
+            <tr>
+                <th scope="col">Id Prestamo</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Fecha Prestamo</th>
+                <th scope="col">Fecha Devolucion</th>
+                <th scope="col">Status</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for prestamo in prestamos%}
+        <tr>
+
+            <th scope="row">{{prestamo.idPrestamo}}</th>
+
+            {% for  cliente in clientes  %}
+                {% if prestamo.idCliente_id == cliente.idCliente %}
+                    <th scope="row">{{cliente.nombre}} - {{cliente.apellido}}</th>
+                {% endif %}
+            {% endfor %}
+
+            {% for  libro in libros  %}
+            {% if prestamo.idLibro_id == libro.idLibro %}
+                <th scope="row">{{libro.titulo}}</th>
+            {% endif %}
+            {% endfor %}
+            <td> {{ prestamo.fechaPrestamo|date:"d/m/Y" }} </td>
+            <td> {{ prestamo.fechaDevolucion|date:"d/m/Y"}} </td>
+            {% if prestamo.status == True %}
+                <td> Devuelto </td>
+                {% else %}
+                    <td> No Devuelto </td>
+            {% endif %}
+            <td> 
+                <button class="btn btn-warning"><a href="{% url 'editarP' prestamo.idPrestamo %}">Realizar Devolucion</a></button>
+            </td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

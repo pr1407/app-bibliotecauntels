@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Inicio</title>
+</head>
+
+<body>
+   <nav> {% include 'navbar.html' %}</nav>
+   <h1>Listado de Libros</h1>
+   <table class="table" style="text-align: center">
+    <thead>
+      <tr>
+        <th scope="col">Id#</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Año de Publicacion</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Status</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for libro in libros%}
+      <tr>
+        <th scope="row">{{libro.idLibro}}</th>
+        <td> {{ libro.titulo }} </td>
+        <td> {{ libro.autor }} </td>
+        <td> {{ libro.anioPublicacion|date:"d/m/Y" }} </td>
+        <td> {{ libro.stock }} </td>
+        
+        {% if libro.status == True %}
+            <td> Disponible </td>
+            {% else %}
+                <td> No Disponible </td>
+        {% endif %}
+        
+        <td> 
+            <button class="btn btn-danger"><a href="{% url 'eliminar' libro.idLibro %}">Eliminar</a></button>
+            <button class="btn btn-warning"><a href="{% url 'editar' libro.idLibro %}">Editar</a></button>
+        </td>
+    </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

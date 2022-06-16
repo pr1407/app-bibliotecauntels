@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Prestamo</title>
+</head>
+<body>
+    {% include  'navbar.html' %}
+    <h1>Registrar Prestamo</h1>
+    <form action="" method = "POST"> {% csrf_token %}
+        <h5>Elegir Libro</h5>
+        <select name="idlib" class="form-select" aria-label="Default select example">
+            <option selected>Seleccione Libro</option>
+            {% for lib in libros%}
+            <option value="{{lib.idLibro}}">Titulo: {{lib.titulo}} - Autor: {{lib.autor}}</option>
+            {% endfor %}
+        </select>
+        <h5>Elegir Cliente</h5>
+        <select name="idCliente" class="form-select" aria-label="Default select example">
+            <option selected>Seleccione Cliente</option>
+            {% for client in clientes%}
+            <option value="{{client.idCliente}}">Nombre: {{client.nombre}} - Apellido: {{client.apellido}}</option>
+            {% endfor %}
+        </select>
+        <h5>Fecha de prestamo</h5>
+        <input type="date" class="form-control" name="fechaPrestamo" value="{{dia|date:"Y-m-d"}}">
+        <h5>Fecha de devolucion</h5>
+        <input type="date" class="form-control" name="fechaDevolucion" min="{{dia|date:"Y-m-d"}}">
+        <button name = "prestarBtn"type="submit" class="btn btn-success">Registrar</button>
+    </form>
+</body>
+</html>
